@@ -200,7 +200,7 @@ node serverDataPush.js
 | `src/components/SQLEditorComponents/TableList.jsx` | Sidebar list of available tables. |
 | `src/components/SQLEditorComponents/TableTab.jsx` | Manages tab interface for viewing multiple tables. |
 
-### 🧠 AI & Assistance
+### Right Sidebar
 
 | File | Description |
 |------|-------------|
@@ -208,7 +208,7 @@ node serverDataPush.js
 | `src/components/Sidebar/RightSidebar/DifficultyChart.jsx` | Displays performance progress per difficulty. |
 | `src/components/Sidebar/RightSidebar/RightSidebar.jsx` | Wrapper for the right sidebar with analytics and hints. |
 
-### 🧭 Navigation & Layout
+### Left Sidebar
 
 | File | Description |
 |------|-------------|
@@ -256,3 +256,50 @@ The main component of the application is:
 | File | Description |
 |------|-------------|
 | `src/components/SQLEditor.jsx` | Central hub of the application. This is where SQL execution, query editing, and interaction with tables happen. It coordinates the editor, results, and database context. |
+
+---
+
+## 🔄 API Overview
+
+A quick summary of backend API routes that power the game:
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/user/register` | POST | Register a new user |
+| `/user/login` | POST | Log in an existing user |
+| `/user/logout` | POST | Log out the current session |
+| `/game/submit-query` | POST | Submit a SQL query for evaluation |
+| `/game/hint` | GET | Request an AI-generated hint |
+| `/account/quiz-grade` | POST | Submit quiz performance data |
+| `/game/get-tables` | GET | Fetch current SQL tables for the editor |
+
+---
+
+## 🧩 Component Architecture
+
+A simplified flow of how major components connect and interact:
+
+```
+[Login] 
+   ↓
+[Questionnaire] → Sets proficiency level
+   ↓
+[SQLEditor] → Main SQL interaction space
+   ↓
+ ┌───────────────┬───────────────────┐
+ │ [AIAssistant] │ [DifficultyChart] │
+ └───────────────┴───────────────────┘
+         ↓
+   [Badges] + [XP Tracking]
+```
+
+Each component communicates via React Context and props, updating the UI and backend state as users progress.
+
+---
+
+## 📌 Future Improvements / TODOs
+
+Planned or recommended enhancements for future contributors:
+
+- [ ] Leaderboard component
+- [ ] Enhanced AI feedback system (multi-step explanation, visualization)
