@@ -1,16 +1,18 @@
-# 📘 Project Documentation: SQL Beyond - Hazra Imran
+
+# 📘 Project Documentation: SQLBeyond Official - Luiz161001
 
 ## 📂 Project Overview
 
-**SQL Beyond** is an interactive gamified SQL learning platform designed to teach SQL concepts in an engaging way. Users can practice queries, receive AI-assisted hints, unlock badges, and progress through various SQL challenges. This project features a **React-based frontend** and a **Node.js & Express backend** with MongoDB as the database.
+**SQLBeyond Official** is an interactive, gamified SQL learning platform designed to enhance SQL skills through practical query challenges, real-world simulations, and AI-assisted feedback. The platform helps users learn, practice, and master SQL concepts step-by-step in a progressive environment that mimics real-life data analysis tasks.
+
+This project uses a **React-based frontend** and a **Node.js & Express backend**, with **MongoDB** for database management. It integrates gamification features like badges, XP progression, and query performance tracking to maintain engagement.
 
 ---
 
 ## 📑 Directory Structure
 
 ```
-Directory structure:
-└── hazraimran-sqlbeyond/
+└── luiz161001-sqlbeyond_official/
     ├── README.md
     ├── package.json
     ├── backend/
@@ -19,7 +21,6 @@ Directory structure:
     │   ├── package.json
     │   ├── server.js
     │   ├── serverDataPush.js
-    │   ├── .env
     │   ├── .gitattributes
     │   ├── .gitignore
     │   ├── routes/
@@ -32,27 +33,20 @@ Directory structure:
         ├── index.html
         ├── package-lock.json
         ├── package.json
+        ├── vercel.json
         ├── vite.config.js
-        ├── .env
         ├── .gitattributes
         ├── .gitignore
-        ├── public/
         └── src/
             ├── App.jsx
             ├── main.jsx
             ├── storyScreen.css
-            ├── .DS_Store
             ├── assets/
-            │   ├── Happy1.webp
-            │   ├── Helpful.webp
-            │   ├── Thinking1.webp
             │   ├── Typewriter.jsx
-            │   ├── .DS_Store
             │   └── badges/
             ├── components/
             │   ├── QuestionaireForUsers.jsx
             │   ├── SQLEditor.jsx
-            │   ├── .DS_Store
             │   ├── Context/
             │   │   └── GameContext.jsx
             │   ├── Login/
@@ -62,7 +56,6 @@ Directory structure:
             │   │   └── Register.jsx
             │   ├── Modal/
             │   │   ├── BadgeModal.jsx
-            │   │   ├── HintModal.jsx
             │   │   └── LogoutModal.jsx
             │   ├── Sidebar/
             │   │   ├── LeftSidebar/
@@ -80,7 +73,6 @@ Directory structure:
             ├── data/
             │   ├── badges.js
             │   ├── oldQuestions-backup.js
-            │   ├── questions-copy.js
             │   ├── questions.js
             │   └── tables.js
             ├── styles/
@@ -90,9 +82,9 @@ Directory structure:
             │   ├── Editor.css
             │   ├── LeftSidebar.css
             │   ├── QueryResult.css
-            │   ├── QuestionaireForUsers.css
             │   ├── RightSidebar.css
             │   ├── SQLEditor.css
+            │   ├── styles.css
             │   └── Modal/
             │       ├── BadgeModal.css
             │       ├── HintModal.css
@@ -109,8 +101,8 @@ Directory structure:
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-repo/hazraimran-sqlbeyond.git
-cd hazraimran-sqlbeyond
+git clone https://github.com/Luiz161001/SQLBeyond_Official.git
+cd SQLBeyond_Official
 ```
 
 ---
@@ -130,7 +122,7 @@ npm run start
 
 ### 3️⃣ Run the Frontend (React App)
 
-In a new terminal, run:
+In a new terminal:
 
 ```bash
 cd frontend
@@ -143,8 +135,6 @@ npm run dev
 ---
 
 ### 4️⃣ (Optional) Seed Initial Data
-
-If you want to pre-fill your MongoDB with sample questions, tables, and badges:
 
 ```bash
 cd backend
@@ -160,25 +150,8 @@ node serverDataPush.js
 
 ---
 
-## ✅ Summary of Key Commands
-
-| Command                               | Description                            |
-| ------------------------------------- | -------------------------------------- |
-| `npm install` (in backend & frontend) | Install dependencies                   |
-| `npm run start` (in backend)          | Start the backend server               |
-| `npm run dev` (in frontend)           | Start the frontend in development mode |
-| `node serverDataPush.js`              | Populate MongoDB with sample data      |
-
 
 ## 📁 File Overview — What Each File Does
-
-### 🚀 Main Component Highlight
-
-The main component of the application is:
-
-| File | Description |
-|------|-------------|
-| `src/components/SQLEditor.jsx` | Central hub of the application. This is where SQL execution, query editing, and interaction with tables happen. It coordinates the editor, results, and database context. |
 
 ### 🔧 Root & Configuration Files
 
@@ -272,3 +245,14 @@ The main component of the application is:
 |------|-------------|
 | `src/utils/badgeEvaluator.js` | Logic for calculating badge eligibility. |
 | `src/utils/logger.js` | Logging utility (for debugging or analytics). |
+
+
+---
+
+### 🚀 Main Component Highlight
+
+The main component of the application is:
+
+| File | Description |
+|------|-------------|
+| `src/components/SQLEditor.jsx` | Central hub of the application. This is where SQL execution, query editing, and interaction with tables happen. It coordinates the editor, results, and database context. |
