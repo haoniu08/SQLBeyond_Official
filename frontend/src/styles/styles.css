@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@100;200;300;400;500;600;700;800&display=swap");
+
+body {
+  font-family: "Anek Malayalam", sans-serif;
+  background: #edebe4; /* Softer Light Beige */
+  color: #333333; /* Dark Charcoal */
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0 30px;
+}
+
+.quiz-container {
+  max-width: 500px;
+  min-width: 250px;
+  background: #ffffff; /* White background for contrast */
+  border-radius: 10px;
+  margin-top: 100px;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-small-container {
+  padding: 30px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-container .active-question-no {
+  font-size: 32px;
+  font-weight: 500;
+  color: #708090; /* Slate Gray */
+}
+
+.quiz-container .total-question {
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0dee3; /* Light gray for total questions */
+}
+
+.quiz-container h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  color: #333333; /* Dark Charcoal */
+}
+
+.quiz-container ul {
+  width: 100%;
+}
+
+.quiz-container ul li {
+  text-decoration: none;
+  list-style: none;
+  color: #2d264b; /* Dark Blue-gray */
+  font-size: 16px;
+  background: #ffffff; /* White background for list items */
+  border: 1px solid #d3d3d3; /* Light Gray */
+  border-radius: 16px;
+  padding: 11px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease; /* Transition for background and transform */
+}
+
+.quiz-container ul li:hover {
+  background: #f1f1f1;
+  transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+.quiz-container ul .selected-answer {
+  background: #3b82f6; /* Dusty Rose for selected answer */
+  border: 1px solid #708090; /* Slate Gray */
+  transform: scale(1.05); /* Slightly enlarge when selected */
+  transition: background 0.3s ease, transform 0.3s ease; /* Ensure selected state has the same transition */
+}
+
+.quiz-container ul .selected-answer:hover {
+  background-color: #2563eb;
+}
+
+.quiz-container button {
+  background: #22c55e; /* Soft Olive Green */
+  border-radius: 9px;
+  font-size: 18px;
+  color: #ffffff; /* White text */
+  padding: 10px 42px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.quiz-container button:disabled {
+  background: #e7e8e9; /* Light Gray for disabled */
+  color: #9fa3a9; /* Darker gray for disabled text */
+}
+
+.flex-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.result h3 {
+  font-size: 24px;
+  letter-spacing: 1.4px;
+  text-align: center;
+  color: #333333; /* Dark Charcoal */
+}
+
+.result p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.container-fade-enter {
+  opacity: 0;
+}
+.container-fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease; /* Fade in transition */
+}
+.container-fade-exit {
+  opacity: 1;
+}
+.container-fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Fade out transition */
+}
+/* src/styles/styles.css */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* li:hover {
+  background-color: #f0f0f0;
+} */
+
+/* styles.css */
+.result {
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.quest-result {
+  padding: 30px !important;
+  border-radius: 10px !important;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

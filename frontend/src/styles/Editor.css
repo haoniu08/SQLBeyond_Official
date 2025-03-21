@@ -1,0 +1,88 @@
+/* src/components/Editor.scss */
+
+.editor-container {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  /* padding-top: 40px;  */
+}
+
+.editor-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.editor {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  height: 20vh;
+}
+
+.CodeMirror {
+  height: 300px; /* Adjust the height as needed */
+}
+.buttons {
+  /* position: absolute;
+  top: 10px;
+  right: 10px; */
+  display: flex;
+  gap: 10px;
+}
+
+/* Base button styling */
+.button {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  /* Smooth background-color transition */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.clear {
+  background-color: #d9534f;
+}
+
+.clear:hover {
+  background-color: #d02722 !important;
+}
+
+.submit {
+  background-color: #3b82f6;
+}
+
+.submit:hover {
+  background-color: #2563eb;
+}
+
+/* Tooltip container */
+.tooltip-container-editor {
+  position: relative;
+}
+
+/* Tooltip itself: hidden by default, but still in layout */
+.tooltip-container-editor .tooltip {
+  font-size: 18px;
+  right: 0px;
+  top: 40px;
+  z-index: 2;
+
+  display: block; /* Keep 'block' so we can fade opacity */
+  opacity: 0; /* Start invisible */
+  pointer-events: none; /* Not clickable when invisible */
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* When you hover the button, fade in the tooltip */
+.run:hover + .tooltip,
+.clear:hover + .tooltip,
+.submit:hover + .tooltip {
+  opacity: 1; /* Fade in */
+  pointer-events: auto; /* Now clickable (if needed) */
+}

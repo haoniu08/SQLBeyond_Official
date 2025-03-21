@@ -1,0 +1,304 @@
+.ai-assistant {
+  position: relative;
+  background-color: #fff;
+  color: #333;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.assistant-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.help-button,
+.encourage-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Animated Hint Card */
+.hint-card {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 90%;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease-out;
+  z-index: 10;
+}
+
+.hint-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hint-card-content h5 {
+  margin: 0;
+}
+
+.hint-card .close-button {
+  align-self: flex-end;
+  padding: 8px 12px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Slide-In Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons */
+.help-button,
+.show-hint-button {
+  padding: 10px 20px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.encourage-button {
+  padding: 10px 20px;
+  background-color: #0275d8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hints-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hints-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.hints-modal-content h5 {
+  margin-bottom: 20px;
+}
+
+.hints-modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.hints-modal-content ul li {
+  margin: 10px 0;
+  padding: 5px 10px;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+}
+
+.close-modal-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.motion-div-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sage-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  background-color: #3b82f6;
+  width: 90px;
+  height: 90px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ping-bubble {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #4ade80;
+  border-radius: 50%;
+
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.motion-div-bubble {
+  margin: 1.5em 0 1.5em 0;
+  padding: 0.5em 1em 0.5em 1em;
+  background-color: #f3f4f6;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.hint-button {
+  background-color: #3b82f6;
+}
+
+.hint-button:hover {
+  background-color: #2563eb;
+}
+
+.show-hints-button {
+  background-color: #22c55e;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.show-hints-button:hover {
+  background-color: #16a34a;
+}
+
+.loading-spinner {
+  margin-left: 6px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #eee;
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hints-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  /* By default, animate "pop in" */
+  animation: popIn 0.4s ease forwards;
+}
+
+/* When .closing is present, run the popOut animation */
+.hints-modal.closing {
+  animation: popOut 0.4s ease forwards;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* The rest of your existing .hints-modal-content styles remain unchanged */
+.hints-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  /* etc. */
+}

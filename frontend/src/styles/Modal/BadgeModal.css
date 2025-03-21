@@ -1,0 +1,153 @@
+.badgeModal-container {
+  position: absolute;
+  background-color: #00000079;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeModal-container-2 {
+  background-color: #f8f9fa;
+  height: 60%;
+  min-height: fit-content;
+  width: 35%;
+
+  border-radius: 20px;
+
+  box-shadow: 0 2px 8px #4f4f4f, 0 2px 10px #4f4f4f;
+}
+
+.badge-header {
+  width: 100%;
+  height: 3.25em;
+  display: flex;
+  justify-content: end;
+  padding-top: 4px;
+}
+
+.badge-close-btn {
+  width: 3.25em;
+  height: 3.25em;
+  padding-right: 10px;
+  padding-top: 15px;
+  cursor: pointer;
+}
+
+.badge-close-btn img {
+  height: 80%;
+  width: 80%;
+}
+
+.badge-close-btn img {
+  cursor: pointer; /* Show a pointer on hover */
+  transition: transform 0.2s ease-in; /* Animate transform over 0.2s */
+}
+
+.badge-close-btn img:hover {
+  transform: scale(1.3);
+}
+
+.badgeModal {
+  padding: 3em;
+  padding-top: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.badgeModal img {
+  width: 200px;
+}
+
+/* BadgeModal.css */
+
+.badgeModal-container {
+  position: fixed;
+  inset: 0; /* top:0; left:0; right:0; bottom:0; */
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Dark background overlay */
+  background-color: rgba(0, 0, 0, 0.5);
+
+  /* Pop-in animation by default when the modal appears */
+  animation: popIn 0.4s ease forwards;
+}
+
+/* If .closing is present, do the pop-out animation */
+.badgeModal-container.closing {
+  animation: popOut 0.4s ease forwards;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* Adjust the styling of the inner container */
+.badgeModal-container-2 {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  max-width: 500px;
+  width: 90%;
+  /* Additional styling as you wish */
+}
+
+.badge-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.badge-close-btn {
+  cursor: pointer;
+}
+
+.badgeModal {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* For the badge image, text, etc. style as desired */
+.badgeModal img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}

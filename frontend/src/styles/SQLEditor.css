@@ -1,0 +1,336 @@
+.sql-editor-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 0;
+  margin: 0;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  background-color: #f7f7f7;
+}
+
+.sidebar {
+  width: 20%; /* Adjust the width as needed */
+  background-color: #e9ecef;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-editor {
+  flex: 2;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2), 4px 0 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.editor {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%; /* Ensures editor takes the full width of the container */
+}
+
+.CodeMirror {
+  height: 300px;
+  width: 100%; /* Ensures editor width matches container */
+  font-size: 1rem;
+}
+
+.result {
+  display: flex;
+  flex-direction: column; /* Ensures child elements stack vertically */
+  flex-grow: 1; /* Allows it to take up available vertical space */
+  height: 100%; /* Ensure full height of parent container */
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.result pre {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.table-container {
+  flex-grow: 1; /* Allows the table container to grow and fill available space */
+  height: 100%; /* Ensures the height fills the parent container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.table-container table {
+  width: 100%; /* Ensures the table takes up the full width */
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-container th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: left;
+}
+
+.question-box {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+.question-box h3 {
+  margin: 0;
+}
+
+.result.correct {
+  border: 2px solid #4caf50; /* Green border for correct answer */
+  box-shadow: 0 0 10px #4caf50;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result.incorrect {
+  border: 2px solid red; /* Red border for incorrect answer */
+  box-shadow: 0 0 10px red;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.left-sidebar {
+  flex: 1;
+}
+
+.right-sidebar {
+  flex: 1;
+}
+
+.result-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  /* Optionally add some margin or padding */
+  margin-top: 1rem;
+}
+
+/* Example button styling inside .result-btns */
+.result-btns button {
+  padding: 0.5rem 1rem;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Add smooth transitions for background & scale */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.result-btns button:hover {
+  transform: scale(1.01); /* Slight zoom on hover */
+}
+
+.jump-animation {
+  animation: jump 0.75s ease-in-out;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* 
+  Overall container for the entire SQL Editor layout.
+  Takes full viewport width/height and arranges sidebars + main editor in a row.
+*/
+.sql-editor-container {
+  display: flex;
+  width: 100vw; /* Full width */
+  height: 100vh; /* Full height */
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  overflow: hidden; /* Prevent horizontal scroll if content overflows */
+}
+
+/* Left Sidebar */
+.left-sidebar {
+  flex: 1; /* or a fixed width if you prefer, e.g. width: 20% */
+  display: flex;
+  flex-direction: column;
+  background-color: #e9ecef;
+  /* Any other styling you like */
+}
+
+/* Right Sidebar */
+.right-sidebar {
+  flex: 1; /* or a fixed width if you prefer, e.g. width: 20% */
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f1f1;
+  /* Any other styling you like */
+}
+
+/* The main editor area in the center */
+.main-editor {
+  flex: 2; /* Takes up remaining space between sidebars */
+  display: flex;
+  flex-direction: column; /* Stacks the Editor (CodeMirror) + Results vertically */
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2), 4px 0 8px rgba(0, 0, 0, 0.2);
+  min-height: 0; /* Crucial so child flex items can shrink if needed */
+  overflow: hidden; /* We'll let the .result or .editor handle scrolling */
+  z-index: 1;
+}
+
+/* Editor container (with CodeMirror) */
+.editor {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  /* If you want the CodeMirror editor to be a fixed height, do it here or in .CodeMirror */
+}
+
+/* CodeMirror styling */
+.CodeMirror {
+  height: 300px; /* Example fixed height for the code editor */
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* The area that holds query results or pinned tables */
+.result {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Fill remaining vertical space in .main-editor */
+  min-height: 0; /* Important so it can shrink if needed */
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* If you want to style the "Query Result:" heading, do it here */
+.result h3 {
+  margin: 0 0 10px 0;
+}
+
+/* This container holds the actual table or pinned tables, and is scrollable */
+.table-container {
+  flex: 1; /* Grow to fill leftover vertical space */
+  overflow-y: auto; /* Scroll vertically if results exceed container height */
+  overflow-x: auto; /* Scroll horizontally if columns are wide */
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: 1rem; /* Spacing above the table, optional */
+}
+
+/* Basic table styling */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-container th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* 
+  If your result can also be just <pre> (e.g. an error message),
+  style it similarly:
+*/
+.result pre {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* 
+  Buttons below the query result area (e.g. "Query Results" vs "Pinned Tables")
+*/
+.result-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+/* Example button styling inside .result-btns */
+.result-btns button {
+  padding: 0.5rem 1rem;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.result-btns button:hover {
+  transform: scale(1.01);
+}
+
+/* Jump animation used by pinned tables button */
+.jump-animation {
+  animation: jump 0.75s ease-in-out;
+}
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* 
+  Additional states for result container if you want to show correct/incorrect 
+  highlight (optional)
+*/
+.result.correct {
+  border: 2px solid #4caf50;
+  box-shadow: 0 0 10px #4caf50;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.result.incorrect {
+  border: 2px solid red;
+  box-shadow: 0 0 10px red;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}

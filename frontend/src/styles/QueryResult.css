@@ -1,0 +1,24 @@
+src/styles/QueryResult.css .query-result-container {
+  max-height: 400px; /* Set a maximum height for vertical scrolling */
+  max-width: 100%; /* Set a maximum width for horizontal scrolling */
+  overflow: auto; /* Enable both horizontal and vertical scrollbars */
+  border: 1px solid #ddd; /* Optional: Add a border to the container */
+  padding: 10px;
+}
+
+.query-result-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.query-result-table th,
+.query-result-table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.query-result-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
