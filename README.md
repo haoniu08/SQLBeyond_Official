@@ -1,5 +1,5 @@
 
-# 📘 Project Documentation: SQLBeyond Official - Luiz161001
+# 📘 Project Documentation: SQLBeyond Official 
 
 ## 📂 Project Overview
 
