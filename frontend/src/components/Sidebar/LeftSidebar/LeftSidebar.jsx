@@ -34,11 +34,22 @@ const LeftSidebar = ({
                 Points for this question: <span>{adjustedPoints}</span>
               </p>
 
-              <p>
-                Current Task: <span>{message}</span>
+              {/* Update */}
+              {gameData?.currentQuestion?.difficulty && (
+                <p>
+                  <span className={`difficulty-label ${gameData.currentQuestion.difficulty.toLowerCase()}`}>
+                    {gameData.currentQuestion.difficulty}
+                  </span>
+                </p>
+              )}
+
+              <h3 className="section-header">📝 Current Task</h3>
+              <p className="task-message">
+                {message}
               </p>
 
-              <h4>Expected Output (Top 5 Rows):</h4>
+              <h3 className="section-header">🔍 Expected Output (Top 5 Rows)</h3>
+
               <div className="sample-table-container">
                 <table className="sample-table">
                   <thead>

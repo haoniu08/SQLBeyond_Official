@@ -102,8 +102,20 @@ const RightSidebar = ({
       <div className="difficulty-chart">
         <h3>Performance</h3>
         <DifficultyChart pointsData={pointsData} idealPoints={idealPoints} />
+     </div>
+
+      {/* Placeholder for Task Progress */}
+      <div className="placeholder-section">
+        <h4> Task Progress</h4>
+        <div className="progress-placeholder">[TODO: Progress bar here]</div>
       </div>
-    </div>
+
+      {/* Placeholder for Badge Tracker */}
+      <div className="placeholder-section">
+        <h4> Badge Tracker</h4>
+        <div className="badge-placeholder">[TODO: Badge list here]</div>
+      </div>
+   </div>
   );
 };
 

@@ -20,6 +20,23 @@ import evaluateBadges from "../utils/badgeEvaluator"; // <-- import the badge ev
 
 import "../styles/SQLEditor.css";
 
+const XPBar = ({ xp, maxXP }) => {
+  const percentage = Math.min((xp / maxXP) * 100, 100).toFixed(0);
+
+  return (
+    <div className="xp-bar">
+      <div className="xp-bar-header">
+        <strong>XP Progress</strong>
+        <span>{xp} / {maxXP}</span>
+      </div>
+      <div className="xp-bar-fill">
+        <div className="xp-fill" style={{ width: `${percentage}%` }}></div>
+      </div>
+    </div>
+  );
+};
+
+
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 /**
@@ -497,6 +514,7 @@ FROM table_name;`
 
       {/* Main Editor */}
       <div className="main-editor">
+        <XPBar xp={gameData.points} maxXP={100} />
         <Editor
           setQuery={setQuery}
           query={query}
@@ -521,7 +539,7 @@ FROM table_name;`
               removeTable={removeTableContent}
             />
           ) : (
-            <QueryResult result={result} />
+            <h3 className="section-header">🧾 Query Result</h3>
           )}
         </div>
       </div>

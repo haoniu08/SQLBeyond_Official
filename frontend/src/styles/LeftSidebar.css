@@ -273,3 +273,46 @@
 .table-columns ul li:hover {
   background-color: #eaf3ff; /* A lighter highlight */
 }
+
+
+/* Update Difficulty */
+.difficulty-label {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 8px;
+}
+
+.difficulty-label.easy {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.difficulty-label.medium {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.difficulty-label.hard {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+
+.section-header {
+  font-size: 1.1rem;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 4px;
+}
+
+.task-message {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #444;
+}

@@ -308,3 +308,21 @@
 .canvas-wrapper canvas {
   transition: all 0.2s ease-in-out; /* Smoothly resize or animate */
 }
+
+.placeholder-section {
+  border: 1px dashed #ccc;
+  background-color: #f9f9f9;
+  padding: 12px;
+  margin: 20px 10px;
+  border-radius: 6px;
+  font-style: italic;
+  color: #666;
+}
+
+.placeholder-section h4 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
