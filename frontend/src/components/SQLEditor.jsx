@@ -18,24 +18,10 @@ import questions from "../data/questions";
 // import logToCSV from "../utils/logger";
 import evaluateBadges from "../utils/badgeEvaluator"; // <-- import the badge evaluator
 
+import CountUp from "react-countup";
+import logEvent from "../utils/logger";
+
 import "../styles/SQLEditor.css";
-
-const XPBar = ({ xp, maxXP }) => {
-  const percentage = Math.min((xp / maxXP) * 100, 100).toFixed(0);
-
-  return (
-    <div className="xp-bar">
-      <div className="xp-bar-header">
-        <strong>XP Progress</strong>
-        <span>{xp} / {maxXP}</span>
-      </div>
-      <div className="xp-bar-fill">
-        <div className="xp-fill" style={{ width: `${percentage}%` }}></div>
-      </div>
-    </div>
-  );
-};
-
 
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
@@ -225,6 +211,11 @@ FROM table_name;`
           ? data.results.slice(0, 10)
           : data.results;
         setResult(limitedResult);
+
+        logEvent("RunQuery", {
+          userQuery: userQuery,
+          result: limitedResult
+      });
       } else {
         setResult([{ error: "Syntax error or invalid query." }]);
         setMessage("❌ Try again");
@@ -236,6 +227,11 @@ FROM table_name;`
       console.error("Error:", error);
       setResult([{ error: "Error connecting to server." }]);
       setMessage("❌ Try again");
+
+      logEvent("RunQuery", {
+        userQuery: userQuery,
+        result: "Invalid Query"
+    });
       setTimeout(() => {
         setMessage(`${gameData.currentQuestion.question}`);
       }, 3000);
@@ -256,24 +252,20 @@ FROM table_name;`
         setResult(data.results);
         setErrorHint("");
         checkAnswer(data.results, userQuery);
-
-        // logToCSV({
-        //   timestamp,
-        //   action: "Query Submitted",
-        //   query: userQuery,
-        //   result: JSON.stringify(data.results),
-        //   status: "Success",
-        // });
-      } else {
+    
+        logEvent("SubmitQuery", {
+            userQuery: userQuery,
+            result: data.results,
+            status: "Success"
+        });
+    } else {
         setErrorHint("Your query has a syntax error or is invalid.");
-        // logToCSV({
-        //   timestamp,
-        //   action: "Query Submitted",
-        //   query: userQuery,
-        //   result: "Invalid Query",
-        //   status: "Error",
-        // });
-      }
+        logEvent("SubmitQuery", {
+            userQuery: userQuery,
+            result: "Invalid Query",
+            status: "Error"
+        });
+    }    
     } catch (error) {
       console.error("Error:", error);
       setErrorHint("An error occurred while connecting to the server.");
@@ -294,9 +286,13 @@ FROM table_name;`
 
       const questionDifficulty = gameData.currentQuestion.difficulty;
       let earnedPoints = correct ? gameData.currentQuestion.points : 0;
-      earnedPoints = Math.max(earnedPoints - gameData.hintsUsedForQuestion, 0);
+      earnedPoints = Math.max(earnedPoints - hintsUsedForQuestion, 0);
 
       if (correct) {
+        logEvent("CorrectAnswer", {
+          userQuery: userQuery,
+          earnedPoints: earnedPoints
+      });
         // update local points
         setPlayerPoints((prevPoints) => {
           const updatedPoints = { ...prevPoints };
@@ -334,6 +330,10 @@ FROM table_name;`
           loadQuestion();
         }, 3000);
       } else {
+         logEvent("WrongAnswer", {
+        userQuery: userQuery,
+        retryCount: retryCount + 1
+    });
         setRetryCount((prev) => prev + 1);
         setMessage("❌ Try again");
         setTimeout(() => {
@@ -514,7 +514,6 @@ FROM table_name;`
 
       {/* Main Editor */}
       <div className="main-editor">
-        <XPBar xp={gameData.points} maxXP={100} />
         <Editor
           setQuery={setQuery}
           query={query}
@@ -522,7 +521,43 @@ FROM table_name;`
           submitQuery={submitQuery}
           buttonsDisabled={buttonsDisabled}
           progress={gameData?.points || 0}
+          currentDifficulty={gameData?.currentDifficulty || "easy"}
         />
+
+        {/* XP Progress Bar */}
+        <div className="xp-progress-bar">
+          <div className="xp-labels">
+            <span>
+              XP:{" "}
+              <CountUp start={0} end={gameData.points} duration={1.5} separator="," />
+            </span>
+            <span>
+              Level: {gameData.currentDifficulty} ({gameData.points}/
+              {gameData.currentDifficulty === "easy"
+                ? 100
+                : gameData.currentDifficulty === "medium"
+                ? 200
+                : 300}
+              )
+            </span>
+          </div>
+          <div className="xp-bar-wrapper">
+            <div
+              className="xp-bar"
+              style={{
+                width: `${
+                  (gameData.points /
+                    (gameData.currentDifficulty === "easy"
+                      ? 100
+                      : gameData.currentDifficulty === "medium"
+                      ? 200
+                      : 300)) *
+                  100
+                }%`,
+              }}
+            ></div>
+          </div>
+        </div>
 
         {/* Result Section */}
         <div className="result">
@@ -539,7 +574,7 @@ FROM table_name;`
               removeTable={removeTableContent}
             />
           ) : (
-            <h3 className="section-header">🧾 Query Result</h3>
+            <QueryResult result={result} />
           )}
         </div>
       </div>

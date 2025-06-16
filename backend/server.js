@@ -1,3 +1,11 @@
+const fs = require('fs');
+const logDir = './logs';
+
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir, { recursive: true });
+  console.log("Logs directory created:", logDir);
+}
+
 const mysql = require("mysql2/promise"); // Use promise-based MySQL
 require("dotenv").config();
 const express = require("express");
@@ -341,3 +349,21 @@ const closeConnections = async () => {
 };
 
 process.on("SIGINT", () => closeConnections());
+
+// ---------------------- Logging API -------------------
+app.post("/api/log", (req, res) => {
+  const logEntry = req.body;
+
+  try {
+    if (!fs.existsSync(logDir)) {
+      fs.mkdirSync(logDir, { recursive: true });
+    }
+
+    const safeString = JSON.stringify(logEntry, null, 2);
+    fs.appendFileSync(`${logDir}/logs.txt`, safeString + '\n');
+    res.json({ success: true, message: "Log saved." });
+  } catch (err) {
+    console.error("Failed to save log:", err);
+    res.status(500).json({ error: "Failed to save log." });
+  }
+});

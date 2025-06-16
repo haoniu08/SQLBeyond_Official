@@ -11,6 +11,7 @@ const Editor = ({
   executeQuery,
   submitQuery,
   buttonsDisabled,
+  currentDifficulty,
 }) => {
   const [content, setContent] = useState(query);
 
@@ -18,7 +19,12 @@ const Editor = ({
     <div className="editor-container">
       <div className="editor-header">
         <div>
-          Current XP: {progress}/100
+        Current XP: {progress}/
+          {currentDifficulty === "easy"
+            ? 100
+            : currentDifficulty === "medium"
+            ? 200
+            : 300}
         </div>
         <div className="buttons">
           <div className="tooltip-container-editor">
@@ -87,6 +93,7 @@ Editor.propTypes = {
   executeQuery: PropTypes.func.isRequired,
   submitQuery: PropTypes.func.isRequired, // Submit button function
   buttonsDisabled: PropTypes.bool.isRequired,
+  currentDifficulty: PropTypes.string,
 };
 
 export default memo(Editor);

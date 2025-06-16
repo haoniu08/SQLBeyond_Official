@@ -286,21 +286,6 @@
   margin-bottom: 8px;
 }
 
-.difficulty-label.easy {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.difficulty-label.medium {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.difficulty-label.hard {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
 
 .section-header {
   font-size: 1.1rem;
@@ -315,4 +300,39 @@
   margin-bottom: 12px;
   font-size: 0.95rem;
   color: #444;
+}
+
+.left-sidebar-bottom {
+  flex: 1;
+  overflow: hidden;  /* 禁止滚动条 */
+  position: relative;
+}
+
+.left-sidebar-bottom > ul {
+  overflow-y: auto;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  scrollbar-width: none;            /* Firefox 隐藏 */
+  -ms-overflow-style: none;         /* IE 隐藏 */
+}
+
+.left-sidebar-bottom > ul::-webkit-scrollbar {
+  display: none;                    /* Chrome/Safari 隐藏 */
+}
+
+.bounce {
+  background: linear-gradient(100deg, #fffbe6 40%, #e6f7ff 100%);
+  border: 2px solid #8ac6ff;
+  box-shadow: 0 0 14px #b3e0ff;
+  color: #006fa1;
+}
+ 
+
+@keyframes bounceIn {
+  0%   { transform: scale(1);}
+  15%  { transform: scale(1.32);}
+  55%  { transform: scale(0.9);}
+  85%  { transform: scale(1.15);}
+  100% { transform: scale(1);}
 }

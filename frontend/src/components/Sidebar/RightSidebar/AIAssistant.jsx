@@ -122,9 +122,15 @@ const AIAssistant = ({
       });
 
       if (res.data.success) {
-        const newHint = `Hint: ${res.data.hint}`;
+        const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const newHint = {
+          content: `Hint: ${res.data.hint}`,
+          tier: "Tier 1",
+          time: now,
+          status: "No correction"
+        };
         setHints((prevHints) => [newHint, ...prevHints]);
-        setResponse(newHint);
+        setResponse(newHint.content);
         setMessage("Hint provided!");
         setShowCard(true);
 
@@ -140,6 +146,7 @@ const AIAssistant = ({
           currentQuery: query,
           retries,
           currentTask: taskDescription.question,
+          hintsUsedForQuestion: hintsUsed + 1,
         });
       } else {
         setMessage("Unable to fetch hint. Try again later.");
@@ -168,9 +175,15 @@ Hint:`;
       const res = await axios.post(`${apiUrl}/generate-sql`, { prompt });
 
       if (res.data.success) {
-        const aiHint = `AI Hint: ${res.data.response}`;
+        const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const aiHint = {
+          content: `AI Hint: ${res.data.response}`,
+          tier: "Tier 2",
+          time: now,
+          status: "No correction"
+        };
         setHints((prevHints) => [aiHint, ...prevHints]);
-        setResponse(aiHint);
+        setResponse(aiHint.content);
         setMessage("AI-generated hint provided!");
         setShowCard(true);
 
@@ -186,6 +199,7 @@ Hint:`;
           currentQuery: query,
           retries,
           currentTask: taskDescription.question,
+          hintsUsedForQuestion: hintsUsed + 1,
         });
       } else {
         setMessage("Unable to fetch AI hint. Try again later.");
@@ -212,9 +226,15 @@ Hint:`;
       });
 
       if (res.data.success) {
-        const personalizedHint = `Personalized Hint: ${res.data.response}`;
+        const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const personalizedHint = {
+          content: `Personalized Hint: ${res.data.response}`,
+          tier: "Tier 3",
+          time: now,
+          status: "No correction"
+        };
         setHints((prevHints) => [personalizedHint, ...prevHints]);
-        setResponse(personalizedHint);
+        setResponse(personalizedHint.content);
         setMessage("Personalized hint provided!");
         setShowCard(true);
 
@@ -230,6 +250,7 @@ Hint:`;
           currentQuery: query,
           retries,
           currentTask: taskDescription.question,
+          hintsUsedForQuestion: hintsUsed + 1,
         });
       } else {
         console.error("API Error:", res.data.error || "Unknown error");
@@ -319,9 +340,12 @@ Hint:`;
               style={{ overflowY: "auto", maxHeight: "300px" }}
             >
               <ul>
-                {hints.map((hint, index) => (
-                  <li key={index}>{hint}</li>
-                ))}
+              {hints.map((hint, index) => (
+                <li key={index}>
+                  <div><strong>{hint.tier}</strong> used at {hint.time} — {hint.status}</div>
+                  <div>{hint.content}</div>
+                </li>
+              ))}
               </ul>
             </div>
             <button className="close-modal-button" onClick={handleToggleModal}>
