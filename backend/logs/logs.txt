@@ -1,0 +1,280 @@
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:24:00.780Z",
+  "eventType": {
+    "timestamp": "2025-06-16T01:24:00.780Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "SELECT MIN(DIN)\nFROM Medication;\n",
+    "retries": 0,
+    "currentTask": "Find all technicians whose training level is not recorded (NULL).",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:24:34.859Z",
+  "eventType": "RunQuery",
+  "eventPayload": {
+    "userQuery": "SELECT *\nFROM Technician\nWHERE trainingLevel IS NULL;\n",
+    "result": []
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:24:37.433Z",
+  "eventType": "CorrectAnswer",
+  "eventPayload": {
+    "userQuery": "SELECT *\nFROM Technician\nWHERE trainingLevel IS NULL;\n",
+    "earnedPoints": 19
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:24:37.440Z",
+  "eventType": "SubmitQuery",
+  "eventPayload": {
+    "userQuery": "SELECT *\nFROM Technician\nWHERE trainingLevel IS NULL;\n",
+    "result": [],
+    "status": "Success"
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:40:57.827Z",
+  "eventType": {
+    "timestamp": "2025-06-16T01:40:57.827Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Find the highest salary among employees.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:22.866Z",
+  "eventType": "RunQuery",
+  "eventPayload": {
+    "userQuery": "SELECT MAX(salary)\nFROM Employee;\n",
+    "result": [
+      {
+        "MAX(salary)": "95000.00"
+      }
+    ]
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:24.451Z",
+  "eventType": "CorrectAnswer",
+  "eventPayload": {
+    "userQuery": "SELECT MAX(salary)\nFROM Employee;\n",
+    "earnedPoints": 19
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:24.458Z",
+  "eventType": "SubmitQuery",
+  "eventPayload": {
+    "userQuery": "SELECT MAX(salary)\nFROM Employee;\n",
+    "result": [
+      {
+        "MAX(salary)": "95000.00"
+      }
+    ],
+    "status": "Success"
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:54.635Z",
+  "eventType": {
+    "timestamp": "2025-06-16T01:41:54.634Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "SELECT DISTINCT trainingLevel\nFROM Technician;\n",
+    "retries": 0,
+    "currentTask": "Find all unique training levels of technicians.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:56.561Z",
+  "eventType": "RunQuery",
+  "eventPayload": {
+    "userQuery": "SELECT DISTINCT trainingLevel\nFROM Technician;\n",
+    "result": [
+      {
+        "trainingLevel": "Advanced"
+      },
+      {
+        "trainingLevel": "Intermediate"
+      },
+      {
+        "trainingLevel": "Beginner"
+      }
+    ]
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:58.551Z",
+  "eventType": "CorrectAnswer",
+  "eventPayload": {
+    "userQuery": "SELECT DISTINCT trainingLevel\nFROM Technician;\n",
+    "earnedPoints": 19
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:41:58.558Z",
+  "eventType": "SubmitQuery",
+  "eventPayload": {
+    "userQuery": "SELECT DISTINCT trainingLevel\nFROM Technician;\n",
+    "result": [
+      {
+        "trainingLevel": "Advanced"
+      },
+      {
+        "trainingLevel": "Intermediate"
+      },
+      {
+        "trainingLevel": "Beginner"
+      }
+    ],
+    "status": "Success"
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:24.255Z",
+  "eventType": "RunQuery",
+  "eventPayload": {
+    "userQuery": "SELECT count(*)\nfrom Technician",
+    "result": [
+      {
+        "count(*)": 50
+      }
+    ]
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:26.724Z",
+  "eventType": {
+    "timestamp": "2025-06-16T01:42:26.724Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "SELECT count(*)\nfrom Technician",
+    "retries": 0,
+    "currentTask": "Get the total number of technicians.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:29.976Z",
+  "eventType": "WrongAnswer",
+  "eventPayload": {
+    "userQuery": "SELECT count(*)\nfrom Technician",
+    "retryCount": 1
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:29.977Z",
+  "eventType": "SubmitQuery",
+  "eventPayload": {
+    "userQuery": "SELECT count(*)\nfrom Technician",
+    "result": [
+      {
+        "count(*)": 50
+      }
+    ],
+    "status": "Success"
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:43.446Z",
+  "eventType": "RunQuery",
+  "eventPayload": {
+    "userQuery": "SELECT COUNT(*)\nfrom Technician",
+    "result": [
+      {
+        "COUNT(*)": 50
+      }
+    ]
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:43.961Z",
+  "eventType": "CorrectAnswer",
+  "eventPayload": {
+    "userQuery": "SELECT COUNT(*)\nfrom Technician",
+    "earnedPoints": 19
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:42:43.968Z",
+  "eventType": "SubmitQuery",
+  "eventPayload": {
+    "userQuery": "SELECT COUNT(*)\nfrom Technician",
+    "result": [
+      {
+        "COUNT(*)": 50
+      }
+    ],
+    "status": "Success"
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:43:15.106Z",
+  "eventType": "RunQuery",
+  "eventPayload": {
+    "userQuery": "SELECT *\nFROM Doctor\nWHERE specialty = 'Cardiology';\n",
+    "result": [
+      {
+        "eID": 1,
+        "graduatedFrom": "Harvard Medical School",
+        "specialty": "Cardiology"
+      }
+    ]
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:43:16.253Z",
+  "eventType": "CorrectAnswer",
+  "eventPayload": {
+    "userQuery": "SELECT *\nFROM Doctor\nWHERE specialty = 'Cardiology';\n",
+    "earnedPoints": 20
+  }
+}
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-16T01:43:16.262Z",
+  "eventType": "SubmitQuery",
+  "eventPayload": {
+    "userQuery": "SELECT *\nFROM Doctor\nWHERE specialty = 'Cardiology';\n",
+    "result": [
+      {
+        "eID": 1,
+        "graduatedFrom": "Harvard Medical School",
+        "specialty": "Cardiology"
+      }
+    ],
+    "status": "Success"
+  }
+}

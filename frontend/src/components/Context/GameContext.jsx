@@ -142,26 +142,18 @@ const GameProvider = ({ children }) => {
     */
     const updatePoints = (prevPoints, earnedPoints) => {
         const newPoints = prevPoints + earnedPoints;
-        if (gameData.currentDifficulty == "easy"
-            && newPoints >= 100
-            // && gameData.playerPoints.easy.filter((p) => p >= dynamicIdealPoints[0]).length >= 4
-        ) {
+    
+        if (gameData.currentDifficulty === "easy" && newPoints >= 100) {
             updateGameData("currentDifficulty", "medium");
-            updateGameData("points", 0);
-        }
-        else if (gameData.currentDifficulty == "medium"
-            && newPoints >= 120
-            // this part doesn't seem to be correct
-            // && gameData.playerPoints.easy.filter((p) => p >= dynamicIdealPoints[0]).length >= 3
-        ) {
+        } 
+        else if (gameData.currentDifficulty === "medium" && newPoints >= 200) {
             updateGameData("currentDifficulty", "hard");
-            updateGameData("points", 0);
         }
-        else {
-            updateGameData("points", newPoints);
-        }
+    
+        updateGameData("points", newPoints);
     };
-
+    
+    
     /**
     * This function retrieves the game data when the user logs in or reloads the page
     */

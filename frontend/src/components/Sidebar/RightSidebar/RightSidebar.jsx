@@ -19,6 +19,8 @@ const RightSidebar = ({
   openLogoutModal,
   gameData,
   gameMethods,
+  hintsUsedForQuestion,  
+  setHintsUsedForQuestion,  
 }) => {
   const [hintsUsed, setHintsUsed] = useState(0);
 
@@ -29,9 +31,9 @@ const RightSidebar = ({
   const handleUseHint = () => {
     gameMethods.updateGameData(
       "hintsUsedForQuestion",
-      gameData.hintsUsedForQuestion + 1
+      hintsUsedForQuestion + 1  
     );
-    // console.log("Hint used! Points deducted.");
+    setHintsUsedForQuestion(prev => prev + 1);  
   };
 
   // const progressPercentage = Math.min((progress / 100) * 100, 100); // Cap at 100%
@@ -90,7 +92,7 @@ const RightSidebar = ({
       {/* AI Assistant */}
       <AIAssistant
         handleUseHint={handleUseHint}
-        hintsUsed={hintsUsed}
+        hintsUsed={hintsUsedForQuestion}
         maxHints={100}
         taskDescription={taskDescription}
         query={query}
@@ -102,8 +104,9 @@ const RightSidebar = ({
       <div className="difficulty-chart">
         <h3>Performance</h3>
         <DifficultyChart pointsData={pointsData} idealPoints={idealPoints} />
-      </div>
-    </div>
+     </div>
+
+   </div>
   );
 };
 
