@@ -25,7 +25,7 @@ const AIAssistant = ({
   const [showModal, setShowModal] = useState(false);
   const [isModalClosing, setIsModalClosing] = useState(false);
 
-  const [clickStage, setClickStage] = useState(0); // 0 => standard, 1 => AI, 2 => personalized
+  const [showHintChoices, setShowHintChoices] = useState(false);
 
   // Loading state to show spinner and disable buttons
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ const AIAssistant = ({
     setResponse("");
     setMessage("Need help? I'm here for you!");
     setHints([]);
-    setClickStage(0);
+    setShowHintChoices(false);
   }, [taskDescription]);
 
   // Display error hints automatically
@@ -65,7 +65,7 @@ const AIAssistant = ({
     }
   };
 
-  // Called when the modal’s open/close animation ends
+  // Called when the modal's open/close animation ends
   const handleModalAnimationEnd = () => {
     // If we just finished the closing animation, unmount the modal
     if (isModalClosing) {
@@ -74,36 +74,39 @@ const AIAssistant = ({
     }
   };
 
-  /**
-   * Main sequence for "Ask SAGE" button:
-   *  1) Check if user has hints left
-   *  2) Deduct 1 point
-   *  3) Set loading = true
-   *  4) Call the correct hint function (standard, AI, or personalized)
-   *  5) On success/failure, set loading = false
-   *  6) Bump clickStage up to a max of 2
-   */
-  const handleHintSequence = async () => {
+  // Close the hint choices if clicking outside
+  useEffect(() => {
+    if (!showHintChoices) return;
+    const handleClickOutside = (e) => {
+      // Only close if click is outside the hint choices row
+      if (!e.target.closest('.hint-choices-row') && !e.target.closest('.hint-button')) {
+        setShowHintChoices(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showHintChoices]);
+
+  // Refactored: Each button triggers its own handler
+  const handleHintButtonClick = async (tier) => {
     if (hintsUsed >= maxHints) {
-      setMessage("You have used all your hints!");
+      setMessage('You have used all your hints!');
+      setShowHintChoices(false);
       return;
     }
-
-    // Deduct 1 point for the hint
     handleUseHint();
-
     setIsLoading(true);
     try {
-      if (clickStage === 0) {
+      if (tier === 1) {
         await handleGetHint();
-      } else if (clickStage === 1) {
+      } else if (tier === 2) {
         await handleGetAIHint();
-      } else {
+      } else if (tier === 3) {
         await handleGetPersonalizedHint();
       }
-      setClickStage((prev) => (prev >= 2 ? 2 : prev + 1));
     } finally {
       setIsLoading(false);
+      setShowHintChoices(false);
     }
   };
 
@@ -290,25 +293,51 @@ Hint:`;
       </motion.div>
 
       <div className="assistant-buttons">
-        <button
-          className="hint-button"
-          onClick={handleHintSequence}
-          disabled={isLoading} // Disable while loading
-        >
-          {isLoading ? (
-            <>
-              Loading...
-              {/* You can also add a spinner graphic or CSS animation here */}
-              <span className="loading-spinner" />
-            </>
-          ) : (
-            "Ask SAGE"
+        <div style={{ position: 'relative' }}>
+          <button
+            className="hint-button"
+            onClick={() => setShowHintChoices((v) => !v)}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                Loading...
+                <span className="loading-spinner" />
+              </>
+            ) : (
+              "Ask SAGE"
+            )}
+          </button>
+          {showHintChoices && !isLoading && (
+            <div className="hint-choices-row" style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              margin: '0 auto',
+              top: '110%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              background: '#fff',
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.12)',
+              padding: '0.75rem 1rem',
+              zIndex: 20,
+              justifyContent: 'center',
+              alignItems: 'stretch',
+              minWidth: '260px',
+            }}>
+              <button onClick={() => handleHintButtonClick(1)} className="hint-choice-btn hint-choice-thinking">Give me a thinking hint</button>
+              <button onClick={() => handleHintButtonClick(2)} className="hint-choice-btn hint-choice-strategic">I need some help planning this</button>
+              <button onClick={() => handleHintButtonClick(3)} className="hint-choice-btn hint-choice-content">Explain what's wrong</button>
+            </div>
           )}
-        </button>
+        </div>
         <button
           className="show-hints-button"
           onClick={handleToggleModal}
-          disabled={isLoading} // Also disable the hints log
+          disabled={isLoading}
         >
           Hints Log
         </button>
