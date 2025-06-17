@@ -30,6 +30,9 @@ const AIAssistant = ({
   // Loading state to show spinner and disable buttons
   const [isLoading, setIsLoading] = useState(false);
 
+  const [feedbackGiven, setFeedbackGiven] = useState(false);
+  const [feedbackType, setFeedbackType] = useState(null); // 'up' or 'down'
+
   // Reset card state and hints when the task changes
   useEffect(() => {
     setShowCard(false);
@@ -40,6 +43,8 @@ const AIAssistant = ({
     setMessage("Need help? I'm here for you!");
     setHints([]);
     setShowHintChoices(false);
+    setFeedbackGiven(false);
+    setFeedbackType(null);
   }, [taskDescription]);
 
   // Display error hints automatically
@@ -269,6 +274,13 @@ Hint:`;
     setShowCard(false);
   };
 
+  const handleFeedback = (type) => {
+    setFeedbackGiven(true);
+    setFeedbackType(type);
+    // For now, just log. Replace with API call if needed.
+    console.log(`Hint feedback: ${type === 'up' ? 'useful' : 'not useful'}`, response);
+  };
+
   return (
     <div className="ai-assistant">
       <motion.div
@@ -349,6 +361,30 @@ Hint:`;
           <div className="hint-card-content">
             <h5>{response.startsWith("Error:") ? "Query Error" : "Hint"}</h5>
             <p>{response || "Your hint will appear here!"}</p>
+            {/* Feedback buttons */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5em', margin: '1em 0 0.5em 0' }}>
+              <button
+                className="hint-feedback-btn"
+                onClick={() => handleFeedback('up')}
+                disabled={feedbackGiven}
+                aria-label="This hint was useful"
+              >
+                👍
+              </button>
+              <button
+                className="hint-feedback-btn"
+                onClick={() => handleFeedback('down')}
+                disabled={feedbackGiven}
+                aria-label="This hint was not useful"
+              >
+                👎
+              </button>
+            </div>
+            {feedbackGiven && (
+              <div style={{ textAlign: 'center', color: '#2563eb', fontWeight: 500, marginBottom: '0.5em' }}>
+                Thank you for your feedback!
+              </div>
+            )}
             <button className="close-button" onClick={handleCloseCard}>
               Close
             </button>

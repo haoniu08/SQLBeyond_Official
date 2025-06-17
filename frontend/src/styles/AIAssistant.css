@@ -337,3 +337,24 @@
 .hint-choice-content:hover {
   background: #b91c1c;
 }
+
+.hint-feedback-btn {
+  font-size: 1.5em;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  padding: 0.3em 0.6em;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  margin: 0 0.1em;
+  outline: none;
+}
+.hint-feedback-btn:hover:not(:disabled),
+.hint-feedback-btn:focus:not(:disabled) {
+  background: #dbeafe;
+  box-shadow: 0 0 0 2px #2563eb55;
+}
+.hint-feedback-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

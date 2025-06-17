@@ -362,3 +362,31 @@
   },
   "eventPayload": {}
 }
+{
+  "sessionId": "user_1750180524605_103",
+  "timestamp": "2025-06-17T18:06:25.262Z",
+  "eventType": {
+    "timestamp": "2025-06-17T18:06:25.262Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 7
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1750180524605_103",
+  "timestamp": "2025-06-17T18:06:52.620Z",
+  "eventType": {
+    "timestamp": "2025-06-17T18:06:52.620Z",
+    "action": "Hint Used",
+    "hintType": "AI",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 8
+  },
+  "eventPayload": {}
+}
