@@ -25,10 +25,13 @@ const AIAssistant = ({
   const [showModal, setShowModal] = useState(false);
   const [isModalClosing, setIsModalClosing] = useState(false);
 
-  const [clickStage, setClickStage] = useState(0); // 0 => standard, 1 => AI, 2 => personalized
+  const [showHintChoices, setShowHintChoices] = useState(false);
 
   // Loading state to show spinner and disable buttons
   const [isLoading, setIsLoading] = useState(false);
+
+  const [feedbackGiven, setFeedbackGiven] = useState(false);
+  const [feedbackType, setFeedbackType] = useState(null); // 'up' or 'down'
 
   // Reset card state and hints when the task changes
   useEffect(() => {
@@ -39,7 +42,9 @@ const AIAssistant = ({
     setResponse("");
     setMessage("Need help? I'm here for you!");
     setHints([]);
-    setClickStage(0);
+    setShowHintChoices(false);
+    setFeedbackGiven(false);
+    setFeedbackType(null);
   }, [taskDescription]);
 
   // Display error hints automatically
@@ -65,7 +70,7 @@ const AIAssistant = ({
     }
   };
 
-  // Called when the modal’s open/close animation ends
+  // Called when the modal's open/close animation ends
   const handleModalAnimationEnd = () => {
     // If we just finished the closing animation, unmount the modal
     if (isModalClosing) {
@@ -74,36 +79,39 @@ const AIAssistant = ({
     }
   };
 
-  /**
-   * Main sequence for "Ask SAGE" button:
-   *  1) Check if user has hints left
-   *  2) Deduct 1 point
-   *  3) Set loading = true
-   *  4) Call the correct hint function (standard, AI, or personalized)
-   *  5) On success/failure, set loading = false
-   *  6) Bump clickStage up to a max of 2
-   */
-  const handleHintSequence = async () => {
+  // Close the hint choices if clicking outside
+  useEffect(() => {
+    if (!showHintChoices) return;
+    const handleClickOutside = (e) => {
+      // Only close if click is outside the hint choices row
+      if (!e.target.closest('.hint-choices-row') && !e.target.closest('.hint-button')) {
+        setShowHintChoices(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showHintChoices]);
+
+  // Refactored: Each button triggers its own handler
+  const handleHintButtonClick = async (tier) => {
     if (hintsUsed >= maxHints) {
-      setMessage("You have used all your hints!");
+      setMessage('You have used all your hints!');
+      setShowHintChoices(false);
       return;
     }
-
-    // Deduct 1 point for the hint
     handleUseHint();
-
     setIsLoading(true);
     try {
-      if (clickStage === 0) {
+      if (tier === 1) {
         await handleGetHint();
-      } else if (clickStage === 1) {
+      } else if (tier === 2) {
         await handleGetAIHint();
-      } else {
+      } else if (tier === 3) {
         await handleGetPersonalizedHint();
       }
-      setClickStage((prev) => (prev >= 2 ? 2 : prev + 1));
     } finally {
       setIsLoading(false);
+      setShowHintChoices(false);
     }
   };
 
@@ -266,6 +274,13 @@ Hint:`;
     setShowCard(false);
   };
 
+  const handleFeedback = (type) => {
+    setFeedbackGiven(true);
+    setFeedbackType(type);
+    // For now, just log. Replace with API call if needed.
+    console.log(`Hint feedback: ${type === 'up' ? 'useful' : 'not useful'}`, response);
+  };
+
   return (
     <div className="ai-assistant">
       <motion.div
@@ -290,25 +305,51 @@ Hint:`;
       </motion.div>
 
       <div className="assistant-buttons">
-        <button
-          className="hint-button"
-          onClick={handleHintSequence}
-          disabled={isLoading} // Disable while loading
-        >
-          {isLoading ? (
-            <>
-              Loading...
-              {/* You can also add a spinner graphic or CSS animation here */}
-              <span className="loading-spinner" />
-            </>
-          ) : (
-            "Ask SAGE"
+        <div style={{ position: 'relative' }}>
+          <button
+            className="hint-button"
+            onClick={() => setShowHintChoices((v) => !v)}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                Loading...
+                <span className="loading-spinner" />
+              </>
+            ) : (
+              "Ask SAGE"
+            )}
+          </button>
+          {showHintChoices && !isLoading && (
+            <div className="hint-choices-row" style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              margin: '0 auto',
+              top: '110%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              background: '#fff',
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.12)',
+              padding: '0.75rem 1rem',
+              zIndex: 20,
+              justifyContent: 'center',
+              alignItems: 'stretch',
+              minWidth: '260px',
+            }}>
+              <button onClick={() => handleHintButtonClick(1)} className="hint-choice-btn hint-choice-thinking">Give me a thinking hint</button>
+              <button onClick={() => handleHintButtonClick(2)} className="hint-choice-btn hint-choice-strategic">I need some help planning this</button>
+              <button onClick={() => handleHintButtonClick(3)} className="hint-choice-btn hint-choice-content">Explain what's wrong</button>
+            </div>
           )}
-        </button>
+        </div>
         <button
           className="show-hints-button"
           onClick={handleToggleModal}
-          disabled={isLoading} // Also disable the hints log
+          disabled={isLoading}
         >
           Hints Log
         </button>
@@ -320,6 +361,30 @@ Hint:`;
           <div className="hint-card-content">
             <h5>{response.startsWith("Error:") ? "Query Error" : "Hint"}</h5>
             <p>{response || "Your hint will appear here!"}</p>
+            {/* Feedback buttons */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5em', margin: '1em 0 0.5em 0' }}>
+              <button
+                className="hint-feedback-btn"
+                onClick={() => handleFeedback('up')}
+                disabled={feedbackGiven}
+                aria-label="This hint was useful"
+              >
+                👍
+              </button>
+              <button
+                className="hint-feedback-btn"
+                onClick={() => handleFeedback('down')}
+                disabled={feedbackGiven}
+                aria-label="This hint was not useful"
+              >
+                👎
+              </button>
+            </div>
+            {feedbackGiven && (
+              <div style={{ textAlign: 'center', color: '#2563eb', fontWeight: 500, marginBottom: '0.5em' }}>
+                Thank you for your feedback!
+              </div>
+            )}
             <button className="close-button" onClick={handleCloseCard}>
               Close
             </button>

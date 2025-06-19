@@ -302,3 +302,59 @@
   text-align: center;
   /* etc. */
 }
+
+.hint-choice-btn {
+  width: 100%;
+  padding: 0.7em 1em;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 0.2em;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  color: #fff;
+  outline: none;
+}
+.hint-choice-btn:focus {
+  box-shadow: 0 0 0 2px #2563eb55;
+}
+.hint-choice-thinking {
+  background: #2563eb;
+}
+.hint-choice-thinking:hover {
+  background: #1d4ed8;
+}
+.hint-choice-strategic {
+  background: #f59e42;
+}
+.hint-choice-strategic:hover {
+  background: #d97706;
+}
+.hint-choice-content {
+  background: #ef4444;
+}
+.hint-choice-content:hover {
+  background: #b91c1c;
+}
+
+.hint-feedback-btn {
+  font-size: 1.5em;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  padding: 0.3em 0.6em;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  margin: 0 0.1em;
+  outline: none;
+}
+.hint-feedback-btn:hover:not(:disabled),
+.hint-feedback-btn:focus:not(:disabled) {
+  background: #dbeafe;
+  box-shadow: 0 0 0 2px #2563eb55;
+}
+.hint-feedback-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
