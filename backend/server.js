@@ -27,9 +27,9 @@ const { closeMongodbConnection } = require("./utils/mongodb");
 // Load and validate environment variables
 const PORT = process.env.PORT || 5001;
 const MYSQL_URL = process.env.MYSQL_URL;
-const HUGGINGFACE_API_KEY = process.env.HUGGINGFACE_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-if (!MYSQL_URL || !HUGGINGFACE_API_KEY) {
+if (!MYSQL_URL || !OPENAI_API_KEY) {
   console.error("Error: Missing required environment variables.");
   process.exit(1);
 }
@@ -156,7 +156,7 @@ app.post("/get-hint", (req, res) => {
   });
 });
 
-// Chat endpoint to interact with Hugging Face API
+// Chat endpoint to interact with OpenAI API (optional, not used by AI Assistant)
 app.post("/chat", async (req, res) => {
   const { prompt } = req.body;
 
@@ -166,60 +166,30 @@ app.post("/chat", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct",
+      "https://api.openai.com/v1/chat/completions",
       {
-        inputs: prompt,
-        parameters: { max_length: 50, temperature: 0.7 },
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 50,
+        temperature: 0.7,
       },
       {
-        headers: { Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}` },
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
     res.json({
       success: true,
-      response: response.data.generated_text || "No response generated.",
+      response: response.data.choices[0].message.content || "No response generated.",
     });
   } catch (err) {
-    console.error("Error interacting with Hugging Face:", err);
-    res.status(500).json({ error: "Failed to interact with Hugging Face." });
+    console.error("Error interacting with OpenAI:", err);
+    res.status(500).json({ error: "Failed to interact with OpenAI." });
   }
 });
-
-// // SQL generation endpoint using Hugging Face API
-// app.post("/generate-sql", async (req, res) => {
-//   const { prompt } = req.body;
-//   console.log(prompt);
-//   if (!prompt) {
-//     return res.status(400).json({ error: "Prompt is required." });
-//   }
-
-//   try {
-//     const response = await axios.post(
-//       "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct",
-//       {
-//         inputs: prompt,
-//         parameters: { max_length: 50, temperature: 0.7 },
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-//         },
-//       }
-//     );
-
-//     res.json({
-//       success: true,
-//       response:
-//         response.data.generated_text ||
-//         response.data[0]?.generated_text ||
-//         "No response generated.",
-//     });
-//   } catch (err) {
-//     console.error("Error interacting with Hugging Face:", err.message);
-//     res.status(500).json({ error: "Failed to generate SQL." });
-//   }
-// });
 
 app.post("/generate-sql", async (req, res) => {
   const { prompt } = req.body;
@@ -229,35 +199,34 @@ app.post("/generate-sql", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct",
+      "https://api.openai.com/v1/chat/completions",
       {
-        inputs: prompt,
-        parameters: { max_length: 50, temperature: 0.7 },
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 50,
+        temperature: 0.7,
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
         },
       }
     );
-    console.log(response);
     // Extract only the text after "Hint: "
-    const generatedText =
-      response.data.generated_text || response.data[0]?.generated_text || "";
-    const hint =
-      generatedText.split("Hint: ")[1]?.trim() || "No hint generated.";
+    const generatedText = response.data.choices[0].message.content || "";
+    const hint = generatedText.split("Hint: ")[1]?.trim() || "No hint generated.";
 
     res.json({
       success: true,
       response: hint,
     });
   } catch (err) {
-    console.error("Error interacting with Hugging Face:", err.message);
+    console.error("Error interacting with OpenAI:", err.message);
     res.status(500).json({ error: "Failed to generate SQL." });
   }
 });
 
-// Personalized hint generation endpoint
 app.post("/personalized-hint", async (req, res) => {
   const { userQuery, taskDescription } = req.body;
   if (!userQuery || !taskDescription) {
@@ -270,26 +239,29 @@ app.post("/personalized-hint", async (req, res) => {
   console.log(prompt);
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct",
+      "https://api.openai.com/v1/chat/completions",
       {
-        inputs: prompt,
-        parameters: { max_length: 50, temperature: 0.7 },
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 50,
+        temperature: 0.7,
       },
       {
-        headers: { Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}` },
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
-    const generatedText =
-      response.data[0]?.generated_text || "No response generated.";
-
+    const generatedText = response.data.choices[0].message.content || "No response generated.";
     // Split and extract the last part after "Hint:"
     const hint = generatedText.split("Hint:").pop().trim();
 
     console.log(hint); // Output: "Query looks correct. Submit it!"
     res.json({ success: true, response: hint }); // Send only the extracted hint text
   } catch (err) {
-    console.error("Error interacting with Hugging Face:", err.message);
+    console.error("Error interacting with OpenAI:", err.message);
     res.status(500).json({ error: "Failed to generate personalized hint." });
   }
 });
@@ -299,37 +271,6 @@ app.post("/personalized-hint", async (req, res) => {
 app.use("/account", userRouter);
 // game route (developed in the routes/game.js)
 app.use("/game", gameRouter);
-
-// app.post("/generate-sql", async (req, res) => {
-//   const { prompt } = req.body;
-
-//   if (!prompt) {
-//     return res.status(400).json({ error: "Prompt is required." });
-//   }
-
-//   try {
-//     const response = await axios.post(
-//       "https://api-inference.huggingface.co/models/defog/sqlcoder-7b-2",
-//       {
-//         inputs: prompt,
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-
-//     res.json({
-//       success: true,
-//       response: response.data?.generated_text || "No response generated.",
-//     });
-//   } catch (err) {
-//     console.error("Error interacting with Hugging Face:", err.message);
-//     res.status(500).json({ error: "Failed to generate SQL." });
-//   }
-// });
 
 // Start the server
 const server = app.listen(PORT, () => {
