@@ -29,6 +29,10 @@ const PORT = process.env.PORT || 5001;
 const MYSQL_URL = process.env.MYSQL_URL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+// Debug: Check if API key is loaded (remove this after debugging)
+console.log("OpenAI API Key loaded:", OPENAI_API_KEY ? "YES" : "NO");
+console.log("API Key starts with:", OPENAI_API_KEY ? OPENAI_API_KEY.substring(0, 10) + "..." : "NOT SET");
+
 if (!MYSQL_URL || !OPENAI_API_KEY) {
   console.error("Error: Missing required environment variables.");
   process.exit(1);
@@ -168,9 +172,9 @@ app.post("/chat", async (req, res) => {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o",
         messages: [{ role: "user", content: prompt }],
-        max_tokens: 50,
+        max_tokens: 300,
         temperature: 0.7,
       },
       {
@@ -192,8 +196,27 @@ app.post("/chat", async (req, res) => {
 });
 
 app.post("/generate-sql", async (req, res) => {
-  const { prompt } = req.body;
-  if (!prompt) {
+  const { prompt: _prompt, taskDescription } = req.body;
+  let messages;
+  if (taskDescription && taskDescription.question && taskDescription.answer) {
+    messages = [
+      {
+        role: "system",
+        content: `You are a helpful SQL tutor. Always reply in the following format:\n🧠 Hint 2 — "I need some help planning this" (Strategic)\n\n[Optional: a relatable metaphor or scenario]\n\nTo do this in SQL, you'd need to:\n    1. [Step 1]\n    2. [Step 2]\n    3. [Step 3]\n    ...\n\nExample:\n🧠 Hint 2 — "I need some help planning this" (Strategic)\n\nImagine you're making a shopping list grouped by each customer — you'd list their total purchases of "Gizmo". To do this in SQL, you'd need to:\n    1. Filter the orders to only include the product "Gizmo".\n    2. Group the results by each customer.\n    3. Use SUM() to calculate total units purchased per customer.\n    4. Use HAVING to filter those totals where they exceed 10.`
+      },
+      {
+        role: "user",
+        content: `Task: "${taskDescription.question}"
+Correct Query: "${taskDescription.answer}"
+Generate a strategic, step-by-step plan for this task.`
+      }
+    ];
+  } else {
+    messages = [
+      { role: "user", content: _prompt }
+    ];
+  }
+  if (!messages) {
     return res.status(400).json({ error: "Prompt is required." });
   }
 
@@ -201,9 +224,9 @@ app.post("/generate-sql", async (req, res) => {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 50,
+        model: "gpt-4o",
+        messages,
+        max_tokens: 300,
         temperature: 0.7,
       },
       {
@@ -213,16 +236,14 @@ app.post("/generate-sql", async (req, res) => {
         },
       }
     );
-    // Extract only the text after "Hint: "
     const generatedText = response.data.choices[0].message.content || "";
-    const hint = generatedText.split("Hint: ")[1]?.trim() || "No hint generated.";
-
     res.json({
       success: true,
-      response: hint,
+      response: generatedText,
     });
   } catch (err) {
     console.error("Error interacting with OpenAI:", err.message);
+    console.error("Full error:", err.response?.data || err);
     res.status(500).json({ error: "Failed to generate SQL." });
   }
 });
@@ -235,15 +256,26 @@ app.post("/personalized-hint", async (req, res) => {
     });
   }
 
-  const prompt = `Analyze the following incorrect SQL query and provide a hint to fix it or if its correct then encourage the user to submit (under 25 words). Only output the hint without any additional explanation or repetition. User Query: "${userQuery}" Correct Query: "${taskDescription.answer}" Hint:`;
-  console.log(prompt);
+  const messages = [
+    {
+      role: "system",
+      content: `You are a helpful SQL tutor. Always reply in the following format:\n🔍 Hint 3 — "Explain what's wrong" (Content-Specific)\n\nRight now your query:\n    • [Issue 1]\n    • [Issue 2]\n    • [Issue 3]\n\n[Short advice paragraph about what to do next, referencing relevant SQL concepts.]\n\nExample:\n🔍 Hint 3 — "Explain what's wrong" (Content-Specific)\n\nRight now your query:\n    • Doesn't group purchases by customer (GROUP BY is missing).\n    • Doesn't sum the Quantity column, so you can't check total units.\n    • Doesn't have a HAVING clause to filter customers with more than 10 units.\n\nConsider joining the Customers and Orders tables if needed, and then applying SUM(Quantity), GROUP BY CustomerID, CustomerName, and a HAVING SUM(Quantity) > 10 condition.`
+    },
+    {
+      role: "user",
+      content: `Task: "${taskDescription.question}"
+Correct Query: "${taskDescription.answer}"
+User Query: "${userQuery}"
+Analyze the user's query and generate a content-specific hint as described above.`
+    }
+  ];
   try {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 50,
+        model: "gpt-4o",
+        messages,
+        max_tokens: 300,
         temperature: 0.7,
       },
       {
@@ -255,13 +287,10 @@ app.post("/personalized-hint", async (req, res) => {
     );
 
     const generatedText = response.data.choices[0].message.content || "No response generated.";
-    // Split and extract the last part after "Hint:"
-    const hint = generatedText.split("Hint:").pop().trim();
-
-    console.log(hint); // Output: "Query looks correct. Submit it!"
-    res.json({ success: true, response: hint }); // Send only the extracted hint text
+    res.json({ success: true, response: generatedText });
   } catch (err) {
     console.error("Error interacting with OpenAI:", err.message);
+    console.error("Full error:", err.response?.data || err);
     res.status(500).json({ error: "Failed to generate personalized hint." });
   }
 });

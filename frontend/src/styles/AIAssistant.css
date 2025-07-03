@@ -55,7 +55,7 @@
 .hint-card-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .hint-card-content h5 {
@@ -351,8 +351,8 @@
 }
 .hint-feedback-btn:hover:not(:disabled),
 .hint-feedback-btn:focus:not(:disabled) {
-  background: #dbeafe;
-  box-shadow: 0 0 0 2px #2563eb55;
+  background: #f3f4f6;
+  box-shadow: none;
 }
 .hint-feedback-btn:disabled {
   opacity: 0.5;

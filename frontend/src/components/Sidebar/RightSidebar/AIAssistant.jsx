@@ -165,22 +165,16 @@ const AIAssistant = ({
     }
   };
 
-  // 2) AI-generated metaphorical hint
+  // 2) AI-generated strategic plan hint (Tier 2)
   const handleGetAIHint = async () => {
     if (!taskDescription || !query) {
       setMessage("Ensure your query and task description are available.");
       return;
     }
 
-    const prompt = `Create a metaphorical hint for the SQL task: "${taskDescription.question}". The correct query is: "${taskDescription.answer}". The hint must:
-- Use a meaningful metaphor.
-- Be approximately under 30 words.
-- Avoid repeating or rephrasing the query or task.
-- Output only the hint without any additional explanation or context.
-Hint:`;
-
+    // Send taskDescription to backend so it uses the new strategic plan prompt
     try {
-      const res = await axios.post(`${apiUrl}/generate-sql`, { prompt });
+      const res = await axios.post(`${apiUrl}/generate-sql`, { taskDescription });
 
       if (res.data.success) {
         const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
