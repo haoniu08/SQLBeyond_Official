@@ -390,3 +390,17 @@
   },
   "eventPayload": {}
 }
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-06-24T00:05:04.577Z",
+  "eventType": {
+    "timestamp": "2025-06-24T00:05:04.576Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Find manufacturers who have produced more than 2 medications.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
