@@ -6,6 +6,7 @@ import Register from "./components/Login/Register";
 import AuthProvider from "./components/Login/AuthContext";
 import PrivateRoute from "./components/Login/PrivateRoute";
 import GameProvider from "./components/Context/GameContext";
+import WelcomeIntro from "./components/WelcomeIntro";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
+          <Route path="/welcome" element={<WelcomeIntro />} />
           <Route element={<PrivateRoute />}>
             <Route path="/quiz" element={<QuestionaireForUsers />} />
             <Route path="/SQLEditor" element={<SQLEditor />} />

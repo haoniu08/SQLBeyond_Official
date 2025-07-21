@@ -10,7 +10,9 @@ function Register() {
   if(auth.user){
       if(auth.user.quizData)
         return <Navigate to="/SQLEditor" replace />;
-      return <Navigate to="/quiz" replace />;
+    if (!localStorage.getItem("introSeen"))
+      return <Navigate to="/welcome" replace />;
+    return <Navigate to="/quiz" replace />;
   }
 
   const handleChange = (e) => {

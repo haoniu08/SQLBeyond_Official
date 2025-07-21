@@ -8,8 +8,11 @@ function Login() {
   const auth = useAuth();
 
   if(auth.user){
-    if(auth.user.quizData)
+    // Check for introSeen in localStorage
+    if (auth.user.quizData)
       return <Navigate to="/SQLEditor" replace />;
+    if (!localStorage.getItem("introSeen"))
+      return <Navigate to="/welcome" replace />;
     return <Navigate to="/quiz" replace />;
   }
 
