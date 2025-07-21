@@ -31,6 +31,9 @@ const AuthProvider = ({ children }) => {
             if (data.user) {
                 setUser(data.user);
                 setLoading(false);
+                if (!localStorage.getItem("introSeen")) {
+                    return navigate("/welcome");
+                }
                 return navigate("/quiz");
             }
             throw new Error(response.message);
@@ -55,7 +58,9 @@ const AuthProvider = ({ children }) => {
             if (data.user) {
                 setUser(data.user);
                 setLoading(false);
-
+                if (!localStorage.getItem("introSeen")) {
+                    return navigate("/welcome");
+                }
                 if (response.data.missingQuiz)
                     return navigate("/quiz")
 

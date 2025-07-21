@@ -1186,3 +1186,17 @@
   },
   "eventPayload": {}
 }
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:40:56.812Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:40:56.812Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "example:\nSELECT employees\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 4
+  },
+  "eventPayload": {}
+}
