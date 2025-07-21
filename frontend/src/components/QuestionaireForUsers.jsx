@@ -192,8 +192,20 @@ function QuestionaireForUsers() {
     navigate("/SQLEditor");
   };
 
+  // Add skipQuiz handler
+  const skipQuiz = () => {
+    // Optionally set a flag in localStorage
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    localStorage.setItem("userData", JSON.stringify({ ...userData, quizSkipped: true }));
+    navigate("/SQLEditor");
+  };
+
   return (
     <div className="quiz-container">
+      {/* Skip Quiz Button */}
+      <button onClick={skipQuiz} style={{ marginBottom: "1em", background: "#696880", border: "1px solid #ccc", borderRadius: "6px", padding: "8px 16px", cursor: "pointer" }}>
+        Skip Quiz & Start Practicing
+      </button>
       {!showResult ? (
         <div className="quiz-small-container">
           <h2>{questions[activeQuestion].question}</h2>
