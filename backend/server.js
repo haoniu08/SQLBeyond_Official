@@ -1,3 +1,5 @@
+require('./serverDataPush');
+
 const fs = require('fs');
 const logDir = './logs';
 
