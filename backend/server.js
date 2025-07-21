@@ -202,7 +202,7 @@ app.post("/generate-sql", async (req, res) => {
     messages = [
       {
         role: "system",
-        content: `You are a helpful SQL tutor. Always reply in the following format:\n🧠 Hint 2 — "I need some help planning this" (Strategic)\n\n[Optional: a relatable metaphor or scenario]\n\nTo do this in SQL, you'd need to:\n    1. [Step 1]\n    2. [Step 2]\n    3. [Step 3]\n    ...\n\nExample:\n🧠 Hint 2 — "I need some help planning this" (Strategic)\n\nImagine you're making a shopping list grouped by each customer — you'd list their total purchases of "Gizmo". To do this in SQL, you'd need to:\n    1. Filter the orders to only include the product "Gizmo".\n    2. Group the results by each customer.\n    3. Use SUM() to calculate total units purchased per customer.\n    4. Use HAVING to filter those totals where they exceed 10.`
+        content: `You are a helpful SQL tutor. Always reply in the following format (IMPORTANT: Your response must be concise and no more than 60 words.):\n\n[Optional: a relatable metaphor or scenario]\n\nTo do this in SQL, you'd need to:\n    1. [Step 1]\n    2. [Step 2]\n    3. [Step 3]\n    ...\n\nExample:\n🧠 Hint 2 — "I need some help planning this" (Strategic)\n\nImagine you're making a shopping list grouped by each customer — you'd list their total purchases of "Gizmo". To do this in SQL, you'd need to:\n    1. Filter the orders to only include the product "Gizmo".\n    2. Group the results by each customer.\n    3. Use SUM() to calculate total units purchased per customer.\n    4. Use HAVING to filter those totals where they exceed 10.`
       },
       {
         role: "user",
@@ -259,7 +259,7 @@ app.post("/personalized-hint", async (req, res) => {
   const messages = [
     {
       role: "system",
-      content: `You are a helpful SQL tutor. Always reply in the following format:\n🔍 Hint 3 — "Explain what's wrong" (Content-Specific)\n\nRight now your query:\n    • [Issue 1]\n    • [Issue 2]\n    • [Issue 3]\n\n[Short advice paragraph about what to do next, referencing relevant SQL concepts.]\n\nExample:\n🔍 Hint 3 — "Explain what's wrong" (Content-Specific)\n\nRight now your query:\n    • Doesn't group purchases by customer (GROUP BY is missing).\n    • Doesn't sum the Quantity column, so you can't check total units.\n    • Doesn't have a HAVING clause to filter customers with more than 10 units.\n\nConsider joining the Customers and Orders tables if needed, and then applying SUM(Quantity), GROUP BY CustomerID, CustomerName, and a HAVING SUM(Quantity) > 10 condition.`
+      content: `You are a helpful SQL tutor. Always reply in the following format IMPORTANT: Your response must be concise and no more than 60 words.:\n\nRight now your query:\n    • [Issue 1]\n    • [Issue 2]\n    • [Issue 3]\n\n[Short advice paragraph about what to do next, referencing relevant SQL concepts.]\n\nExample:\n🔍 Hint 3 — "Explain what's wrong" (Content-Specific)\n\nRight now your query:\n    • Doesn't group purchases by customer (GROUP BY is missing).\n    • Doesn't sum the Quantity column, so you can't check total units.\n    • Doesn't have a HAVING clause to filter customers with more than 10 units.\n\nConsider joining the Customers and Orders tables if needed, and then applying SUM(Quantity), GROUP BY CustomerID, CustomerName, and a HAVING SUM(Quantity) > 10 condition.`
     },
     {
       role: "user",

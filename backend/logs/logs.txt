@@ -1102,3 +1102,87 @@
   },
   "eventPayload": {}
 }
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:31:05.902Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:31:05.902Z",
+    "action": "Hint Used",
+    "hintType": "AI",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:32:27.458Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:32:27.457Z",
+    "action": "Hint Used",
+    "hintType": "AI",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 2
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:33:56.398Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:33:56.398Z",
+    "action": "Hint Used",
+    "hintType": "AI",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:37:46.958Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:37:46.957Z",
+    "action": "Hint Used",
+    "hintType": "AI",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 1
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:38:07.985Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:38:07.985Z",
+    "action": "Hint Used",
+    "hintType": "Personalized",
+    "currentQuery": "example:\nSELECT fields\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 2
+  },
+  "eventPayload": {}
+}
+{
+  "sessionId": "user_1751497052367_974",
+  "timestamp": "2025-07-21T06:38:41.525Z",
+  "eventType": {
+    "timestamp": "2025-07-21T06:38:41.525Z",
+    "action": "Hint Used",
+    "hintType": "AI",
+    "currentQuery": "example:\nSELECT employees\nFROM table_name;",
+    "retries": 0,
+    "currentTask": "Retrieve all employees who earn exactly 50,000.",
+    "hintsUsedForQuestion": 3
+  },
+  "eventPayload": {}
+}
