@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import CodeMirror from "@uiw/react-codemirror";
 import { sql } from "@codemirror/lang-sql";
 import "../../styles/Editor.css";
+import { placeholder as cmPlaceholder } from "@codemirror/view";
+
 
 const Editor = ({
   progress, // Current progress/points
@@ -74,7 +76,10 @@ const Editor = ({
       <div className="editor">
         <CodeMirror
           value={content}
-          extensions={[sql()]}
+          extensions={[
+            sql(),
+            cmPlaceholder("-- Start typing your SQL query here..."), 
+          ]}
           onChange={(value) => {
             setContent(value);
             setQuery(value); // Update the parent query state in real-time

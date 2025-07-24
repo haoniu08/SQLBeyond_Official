@@ -36,8 +36,10 @@ const RightSidebar = ({
     setHintsUsedForQuestion(prev => prev + 1);  
   };
 
-  // const progressPercentage = Math.min((progress / 100) * 100, 100); // Cap at 100%
+  // Calculate how many badges are unlocked 
+  const unlockedCount = badgesData.filter(badge => badges.includes(badge.name)).length;
 
+  // const progressPercentage = Math.min((progress / 100) * 100, 100); // Cap at 100%
   // useEffect(() => {
   //   if (progress >= 100) {
   //     // Display 100% for 3 seconds, then reset back to the actual progress
@@ -71,7 +73,7 @@ const RightSidebar = ({
 
       {/* Achievements */}
       <div className="achievements">
-        <h3>Achievements</h3>
+      <h3>Achievements ({unlockedCount}/{badgesData.length})</h3>
         <div className="badges-container">
           {badgesData.map((badge) => {
             return (

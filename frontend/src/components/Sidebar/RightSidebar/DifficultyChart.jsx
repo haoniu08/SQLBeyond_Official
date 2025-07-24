@@ -142,7 +142,8 @@ const DifficultyChart = ({ pointsData, idealPoints }) => {
           minRotation: 0, // Prevent rotation
         },
         title: {
-          display: false, // Remove x-axis title
+          display: true, 
+          text: "Difficulty Levels"
         },
         min: -0.5, // Add space on the left of "Easy"
         max: difficulties.length - 0.5, // Add space on the right of "Hard"

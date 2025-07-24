@@ -59,3 +59,12 @@
   background-color: transparent !important;
   cursor: default;
 }
+
+.no-tables-message {
+  font-size: 22px !important;
+  color: #444;           /* 恢复正常颜色 */
+  font-weight: 500;
+  text-align: center;
+  margin: auto;          /* 让 p 标签在 flex 容器中自动居中 */
+}
+

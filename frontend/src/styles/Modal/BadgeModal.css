@@ -12,12 +12,10 @@
 
 .badgeModal-container-2 {
   background-color: #f8f9fa;
-  height: 60%;
-  min-height: fit-content;
-  width: 35%;
-
+  height: auto;   
+  width: 25%;       
+  min-width: 300px; 
   border-radius: 20px;
-
   box-shadow: 0 2px 8px #4f4f4f, 0 2px 10px #4f4f4f;
 }
 

@@ -399,3 +399,17 @@
   },
   "eventPayload": {}
 }
+{
+  "sessionId": "user_1749700809001_697",
+  "timestamp": "2025-07-24T02:54:32.099Z",
+  "eventType": {
+    "timestamp": "2025-07-24T02:54:32.099Z",
+    "action": "Hint Used",
+    "hintType": "Standard",
+    "currentQuery": "select",
+    "retries": 0,
+    "currentTask": "Retrieve all employees whose salary is greater than at least one doctor’s salary.",
+    "hintsUsedForQuestion": 3
+  },
+  "eventPayload": {}
+}

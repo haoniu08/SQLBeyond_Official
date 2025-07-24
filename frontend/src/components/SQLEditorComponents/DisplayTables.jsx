@@ -8,7 +8,9 @@ const DisplayTables = ({ tableContent, removeTable }) => {
                 {
                     tableContent.length === 0 
                     ?
-                    <h1>No tables pinned!</h1>
+                    <p className="no-tables-message">
+                    No tables pinned. Click the 📌 icon beside any table on the left to pin it here.
+                    </p>
                     :
                     tableContent.map((table, index) => {
                         return (

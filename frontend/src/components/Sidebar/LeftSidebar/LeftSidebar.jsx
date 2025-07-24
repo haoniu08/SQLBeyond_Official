@@ -100,7 +100,9 @@ const LeftSidebar = ({
         </div>
       </div>
 
-      <h2 className="sidebar-heading">Tables</h2>
+      <h2 className="sidebar-heading">
+        Tables ({tables.length} total)
+      </h2>
       <div className="left-sidebar-bottom">
         <ul>
           {tables.map((table, index) => {

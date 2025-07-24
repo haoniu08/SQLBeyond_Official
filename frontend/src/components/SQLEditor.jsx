@@ -522,6 +522,7 @@ FROM table_name;`
           buttonsDisabled={buttonsDisabled}
           progress={gameData?.points || 0}
           currentDifficulty={gameData?.currentDifficulty || "easy"}
+          placeholder="-- Start typing your SQL query here..."
         />
 
         {/* XP Progress Bar */}
