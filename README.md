@@ -7,12 +7,38 @@
 
 This project uses a **React-based frontend** and a **Node.js & Express backend**, with **MongoDB** for database management. It integrates gamification features like badges, XP progression, and query performance tracking to maintain engagement.
 
+### 🚀 Key Features
+
+- **Welcome Tutorial**: New users are guided through a brief introduction explaining the hint system, XP progression, and badge achievements
+- **Skip Quiz Option**: Users can choose to skip the initial proficiency assessment and start practicing immediately
+- **AI-Powered SAGE Assistant**: Integrated with **OpenAI API** to provide intelligent, contextual hints and guidance
+- **Multi-Tier Hint System**: Three levels of assistance - thinking hints, strategic planning, and error explanations
+- **Performance Analytics**: Real-time charts showing progress across difficulty levels with placeholder states for new users
+- **Gamified Learning**: XP system, level progression, and achievement badges to maintain motivation
+- **Responsive Design**: Modern UI with smooth animations and intuitive navigation
+
+### 🤖 AI Integration
+
+The platform leverages **OpenAI's GPT models** through the SAGE assistant to provide:
+- **Contextual Hints**: AI-generated guidance based on the current question and user's query
+- **Strategic Planning**: Step-by-step SQL planning assistance
+- **Error Analysis**: Intelligent feedback on query syntax and logic errors
+- **Personalized Learning**: Adaptive responses based on user's current difficulty and progress
+
+---
+
+## 👥 Team Members
+
+- **Hao Niu** - [haoniu08](https://github.com/haoniu08) 
+   - niu.hao@northeastern.edu
+- **Xin Deng** - [Starryxd](https://github.com/Starryxd)
+   - deng.xin1@northeastern.edu
 ---
 
 ## 📑 Directory Structure
 
 ```
-└── luiz161001-sqlbeyond_official/
+└── SQLBeyond_Official/
     ├── README.md
     ├── package.json
     ├── backend/
@@ -45,6 +71,7 @@ This project uses a **React-based frontend** and a **Node.js & Express backend**
             │   ├── Typewriter.jsx
             │   └── badges/
             ├── components/
+            │   ├── WelcomeIntro.jsx
             │   ├── QuestionaireForUsers.jsx
             │   ├── SQLEditor.jsx
             │   ├── Context/
@@ -96,12 +123,19 @@ This project uses a **React-based frontend** and a **Node.js & Express backend**
 
 ---
 
+## 🛠️ To test the deployed version
+
+```bash
+https://sql-beyond-official.vercel.app
+```
+---
+
 ## 🛠️ How to Run the Project Locally
 
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/Luiz161001/SQLBeyond_Official.git
+git clone https://github.com/hazraimran/SQLBeyond_Official.git
 cd SQLBeyond_Official
 ```
 
@@ -117,6 +151,7 @@ npm run start
 
 - The backend will run on **http://localhost:5001** (or the port configured in your `.env` file).
 - Ensure you have a **MongoDB connection string** configured in `backend/.env`.
+- **OpenAI API Key**: Set your OpenAI API key in `backend/.env` as `OPENAI_API_KEY` for the SAGE assistant functionality.
 
 ---
 
@@ -192,7 +227,8 @@ node serverDataPush.js
 
 | File | Description |
 |------|-------------|
-| `src/components/QuestionaireForUsers.jsx` | Quiz component that evaluates user knowledge. |
+| `src/components/WelcomeIntro.jsx` | Welcome tutorial for new users explaining platform features. |
+| `src/components/QuestionaireForUsers.jsx` | Quiz component that evaluates user knowledge with skip option. |
 | `src/components/SQLEditor.jsx` | Core editor where users write and run SQL queries. |
 | `src/components/SQLEditorComponents/Editor.jsx` | SQL input area with real-time editing. |
 | `src/components/SQLEditorComponents/QueryResult.jsx` | Displays query output/results. |
@@ -204,8 +240,8 @@ node serverDataPush.js
 
 | File | Description |
 |------|-------------|
-| `src/components/Sidebar/RightSidebar/AIAssistant.jsx` | Handles interaction with the AI assistant (hints, guidance). |
-| `src/components/Sidebar/RightSidebar/DifficultyChart.jsx` | Displays performance progress per difficulty. |
+| `src/components/Sidebar/RightSidebar/AIAssistant.jsx` | Handles interaction with the AI assistant (hints, guidance) powered by OpenAI API. |
+| `src/components/Sidebar/RightSidebar/DifficultyChart.jsx` | Displays performance progress per difficulty with placeholder states for new users. |
 | `src/components/Sidebar/RightSidebar/RightSidebar.jsx` | Wrapper for the right sidebar with analytics and hints. |
 
 ### Left Sidebar
@@ -246,17 +282,6 @@ node serverDataPush.js
 | `src/utils/badgeEvaluator.js` | Logic for calculating badge eligibility. |
 | `src/utils/logger.js` | Logging utility (for debugging or analytics). |
 
-
----
-
-### 🚀 Main Component Highlight
-
-The main component of the application is:
-
-| File | Description |
-|------|-------------|
-| `src/components/SQLEditor.jsx` | Central hub of the application. This is where SQL execution, query editing, and interaction with tables happen. It coordinates the editor, results, and database context. |
-
 ---
 
 ## 🔄 API Overview
@@ -270,6 +295,8 @@ A quick summary of backend API routes that power the game:
 | `/user/logout` | POST | Log out the current session |
 | `/game/submit-query` | POST | Submit a SQL query for evaluation |
 | `/game/hint` | GET | Request an AI-generated hint |
+| `/game/get-hint` | POST | Request contextual hints from OpenAI-powered SAGE assistant |
+| `/game/generate-sql` | POST | Generate strategic SQL planning assistance using OpenAI |
 | `/account/quiz-grade` | POST | Submit quiz performance data |
 | `/game/get-tables` | GET | Fetch current SQL tables for the editor |
 
@@ -280,26 +307,22 @@ A quick summary of backend API routes that power the game:
 A simplified flow of how major components connect and interact:
 
 ```
-[Login] 
+[Login/Register] 
    ↓
-[Questionnaire] → Sets proficiency level
+[Welcome Tutorial] → Optional intro for new users
+   ↓
+[Questionnaire] → Sets proficiency level (with skip option)
    ↓
 [SQLEditor] → Main SQL interaction space
    ↓
  ┌───────────────┬───────────────────┐
  │ [AIAssistant] │ [DifficultyChart] │
+ │ (OpenAI API)  │ (with placeholders)│
  └───────────────┴───────────────────┘
          ↓
    [Badges] + [XP Tracking]
 ```
 
-Each component communicates via React Context and props, updating the UI and backend state as users progress.
+Each component communicates via React Context and props, updating the UI and backend state as users progress. The SAGE assistant integrates with OpenAI API to provide intelligent, contextual assistance.
 
 ---
-
-## 📌 Future Improvements / TODOs
-
-Planned or recommended enhancements for future contributors:
-
-- [ ] Leaderboard component
-- [ ] Enhanced AI feedback system (multi-step explanation, visualization)
